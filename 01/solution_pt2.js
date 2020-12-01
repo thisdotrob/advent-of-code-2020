@@ -3,27 +3,22 @@ const fs = require('fs');
 const input = fs.readFileSync('input.txt', 'utf8')
                 .split("\n")
                 .map(s => parseInt(s))
-                .sort()
+                .sort((a,b) => a - b)
 
-let diff = -1
+let i0 = -1, i1, i2;
 
-let n0;
-let n1;
-let n2;
-
-while (diff !== 0 && input.length) {
-    n0 = input.pop()
-    let indexA = 0
-    while (diff !== 0 && indexA < input.length - 1){
-        n1 = input[indexA]
-        let indexB = 0
-        while(diff !== 0 && indexB < input.length - 1) {
-            n2 = input[indexB]
-            diff = 2020 - n0 - n1 - n2
-            indexB += 1
+while (true) {
+    i0++
+    i1 = 0
+    i2 = 0
+    while (2020 - input[i0] - input[i1] > 0 && i1 < input.length - 1 ) {
+        while (2020 - input[i0] - input[i1] - input[i2] >= 0 && i2 < input.length - 1) {
+            if (2020 - input[i0] - input[i1] - input[i2] === 0) {
+                console.log(input[i0] * input[i1] * input[i2])
+                process.exit(0)
+            }
+            i2++
         }
-        indexA += 1
+        i1++
     }
 }
-
-console.log(n0 * n1 * n2)
